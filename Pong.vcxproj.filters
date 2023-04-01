@@ -18,6 +18,7 @@
     <None Include="packages.config" />
     <None Include="src\shaders\vertex.vert" />
     <None Include="src\shaders\fragment.frag" />
+    <None Include="freetype\docs\reference\404.html" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -26,5 +27,1132 @@
     <ClCompile Include="src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afcjk.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afdummy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afglobal.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afhints.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afindic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\aflatin.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afloader.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afmodule.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afranges.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afshaper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\autofit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\base\md5.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\bdf\bdfdrivr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\bdf\bdflib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cff\cffcmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cff\cffdrivr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cff\cffgload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cff\cffload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cff\cffobjs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cff\cffparse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cid\cidgload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cid\cidload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cid\cidobjs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cid\cidparse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cid\cidriver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cid\type1cid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\dlg\dlgwrap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvbsln.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvcommn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvfeat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvfgen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvjust.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvkern.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvlcar.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmod.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmort.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmort0.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmort1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmort2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmort4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmort5.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmorx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmorx0.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmorx1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmorx2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmorx4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvmorx5.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvopbd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvprop.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvtrak.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gzip\crc32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gzip\infback.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gzip\inffast.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gzip\inflate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gzip\inftrees.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gzip\zutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvbase.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvcommn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvgdef.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvgpos.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvgsub.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvjstf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvmath.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvmod.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pcf\pcfdrivr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pcf\pcfread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pcf\pcfutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pfr\pfrcmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pfr\pfrdrivr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pfr\pfrgload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pfr\pfrload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pfr\pfrobjs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pfr\pfrsbit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\cffdecode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psarrst.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psaux.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psauxmod.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psblues.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psconv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\pserror.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psfont.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\pshints.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psintrp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psobjs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\psstack.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\t1cmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\t1decode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pshinter\pshglob.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pshinter\pshinter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pshinter\pshmod.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pshinter\pshrec.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psnames\psnames.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\raster\raster.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sdf\sdf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\sfdriver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\sfnt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\sfobjs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\sfwoff.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\sfwoff2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttbdf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttcmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttcolr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttcpal.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttkern.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttmtx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttpost.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttsbit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\ttsvg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\woff2tags.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\smooth\smooth.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\svg\svg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\tools\test_afm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\tools\test_bbox.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\tools\test_trig.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\truetype\ttdriver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\truetype\ttgload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\truetype\ttgxvar.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\truetype\ttinterp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\truetype\ttobjs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\truetype\ttpload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\truetype\ttsubpix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type1\t1driver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type1\t1gload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type1\t1load.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type1\t1objs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type1\t1parse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type1\type1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type42\t42objs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type42\t42parse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type42\type42.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\winfonts\winfnt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\autofit\afblue.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\bdf\bdf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\cff\cff.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\dlg\dlg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gxvalid\gxvalid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\gzip\adler32.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\otvalid\otvalid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pcf\pcf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pfr\pfr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psaux\afmparse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\pshinter\pshalgo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\psnames\psmodule.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\sfnt\pngshim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\tools\apinames.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\truetype\truetype.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type1\t1afm.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\src\type42\t42drivr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freetype\tests\issue-1063\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\ARIAL.TTF" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="freetype\include\dlg\output.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\config\integer-types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\config\mac-support.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\config\public-macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svcfftl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svcid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svfntfmt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svgldict.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svgxval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svkern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svmetric.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svmm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svotval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svpfr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svpostnm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svprop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svpscmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svpsinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svsfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svttcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svtteng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svttglyf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svwinfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\cffotypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\cfftypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\compiler-macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\psaux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\pshints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\sfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\svginterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\t1types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\tttypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\wofftypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\otsvg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\t1tables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\ttnameid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\tttables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\tttags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afblue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afcjk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afcover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afdummy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\aferrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afglobal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afhints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afindic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\aflatin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afloader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afmodule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afranges.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afscript.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afshaper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afstyles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\aftypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afws-decl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\autofit\afws-iter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\base\md5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\bdf\bdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\bdf\bdfdrivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\bdf\bdferror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cff\cffcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cff\cffdrivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cff\cfferrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cff\cffgload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cff\cffload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cff\cffobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cff\cffparse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cff\cfftoken.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cid\cidgload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cid\cidload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cid\cidobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cid\cidparse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cid\cidriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cid\cidtoken.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gxvalid\gxvalid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gxvalid\gxvcommn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gxvalid\gxverror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gxvalid\gxvfeat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gxvalid\gxvmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gxvalid\gxvmort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gxvalid\gxvmorx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gzip\crc32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gzip\gzguts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gzip\inffast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gzip\inffixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gzip\inflate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gzip\inftrees.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gzip\zlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\gzip\zutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\otvalid\otvalid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\otvalid\otvcommn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\otvalid\otverror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\otvalid\otvgpos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\otvalid\otvmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pcf\pcf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pcf\pcfdrivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pcf\pcferror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pcf\pcfread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pcf\pcfutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pfr\pfrcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pfr\pfrdrivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pfr\pfrerror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pfr\pfrgload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pfr\pfrload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pfr\pfrobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pfr\pfrsbit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pfr\pfrtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\afmparse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\cffdecode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psarrst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psauxerr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psauxmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psblues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psconv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\pserror.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psfixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psfont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psft.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psglue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\pshints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psintrp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\psstack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\pstypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\t1cmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psaux\t1decode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pshinter\pshalgo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pshinter\pshglob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pshinter\pshmod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pshinter\pshnterr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\pshinter\pshrec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psnames\psmodule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psnames\psnamerr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\psnames\pstables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\raster\rasterrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\pngshim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\sfdriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\sferrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\sfobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\sfwoff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\sfwoff2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttbdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttcmapc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttcolr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttcpal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttkern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttmtx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttpost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttsbit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\ttsvg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\sfnt\woff2tags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\svg\svgtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\truetype\ttdriver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\truetype\tterrors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\truetype\ttgload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\truetype\ttgxvar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\truetype\ttinterp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\truetype\ttobjs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\truetype\ttpload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\truetype\ttsubpix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type1\t1afm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type1\t1driver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type1\t1errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type1\t1gload.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type1\t1load.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type1\t1objs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type1\t1parse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type1\t1tokens.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type42\t42drivr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type42\t42error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type42\t42objs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type42\t42parse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\type42\t42types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\winfonts\winfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\builds\atari\ATARI.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\dlg\dlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\services\svbdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\include\freetype\internal\autohint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\cid\ciderrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freetype\src\winfonts\fnterrs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\config\integer-types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\config\mac-support.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\config\public-macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svbdf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svcfftl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svcid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svfntfmt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svgldict.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svgxval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svkern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svmetric.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svmm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svotval.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svpfr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svpostnm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svprop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svpscmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svpsinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svsfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svttcmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svtteng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svttglyf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\services\svwinfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\autohint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\cffotypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\cfftypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\compiler-macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\psaux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\pshints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\sfnt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\svginterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\t1types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\tttypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\internal\wofftypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\otsvg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\t1tables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\ttnameid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\tttables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\freetype\tttags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

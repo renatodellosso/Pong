@@ -1,3 +1,5 @@
 Debug/
 packages/
 .vs/
+freetype/
+x64.

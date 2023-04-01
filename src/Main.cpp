@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <cstring>
+
 #include <glad/glad.h> //Make to sure to glad.c to included in project!
 #include <GLFW/glfw3.h>
 
@@ -17,6 +18,9 @@ string readFile(string file);
 void initShaders();
 GLuint genVAO(float *vertices);
 void draw(float *vertices);
+void moveBall();
+void handleKeys();
+void resetGame();
 
 GLuint shaderProgram; //Unsigned int
 GLuint vao; //VertexAttribObject, stores our vertex config
@@ -43,11 +47,53 @@ struct Rect {
 
 		return verts;
 	}
+
+	void drawSelf() {
+		float** verts = vertices();
+		draw(verts[0]);
+		draw(verts[1]);
+	}
+
+	//Create a constructor to populate variables and halve the width
+	Rect(float x, float y, float width, float height) {
+		this->x = x;
+		this->y = y;
+		this->width = width/2; //Not sure why we have to halve width, but we do
+		this->height = height;
+	}
+
+	Rect() { } //Default constructor, we have to have this
 };
 
-float paddleWidth = 0.03f, paddleHeight = 0.4f;
+struct Ball : Rect {
+	float velX, velY;
 
-Rect leftPaddle = { -1.0f, -paddleHeight/2, paddleWidth, paddleHeight }, rightPaddle = { 1.0f - paddleWidth, -paddleHeight/2, paddleWidth, paddleHeight };
+	//Create a constructor to populate variables
+	Ball(float x, float y, float width, float height, float velX, float velY) {
+		this->x = x;
+		this->y = y;
+		this->width = width/2;
+		this->height = height;
+		this->velX = velX;
+		this->velY = velY;
+	}
+
+	Ball() { } //Default constructor, we have to have this
+};
+
+const float PADDLE_WIDTH = 0.03f, PADDLE_HEIGHT = 0.4f, PADDLE_SPEED = 10.0f, BALL_SIZE = 0.1f, BALL_SPEED_INITIAL = 0.5f, BALL_SPEED_INCREASE = 0.1f;
+float ballSpeed = BALL_SPEED_INITIAL;
+
+Rect leftPaddle = { -1.0f, -PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT }, rightPaddle = { 1.0f - PADDLE_WIDTH, -PADDLE_HEIGHT/2, PADDLE_WIDTH, PADDLE_HEIGHT };
+Ball ball = { 0, 0, BALL_SIZE, BALL_SIZE, ((float)(rand()) / (float)RAND_MAX) * 2 - 1, ((float)(rand()) / (float)RAND_MAX) * 2 - 1 }; //Set velocities to random float -1 to 1, but will be overridden in 
+																																	  //resetGame()
+
+float deltaTime = 0, lastTime = 0;
+
+const int W = 87, S = 83, UP = 265, DOWN = 264;
+float leftDir = 0, rightDir = 0;
+
+int leftScore = 0, rightScore = 0;
 
 int main() {
 	if (!glfwInit()) {
@@ -62,8 +108,8 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	//Create window and context
-	window = glfwCreateWindow(1920, 1080, "Pong", NULL, NULL);
+	//Create window and context, getPrimaryMonitor makes it fullscreen
+	window = glfwCreateWindow(1920, 1080, "Pong", glfwGetPrimaryMonitor(), NULL);
 
 	if (!window) {
 		//Failed to create window
@@ -90,11 +136,20 @@ int main() {
 
 	initShaders();
 
+	lastTime = glfwGetTime(); //Gets the time since init
+
+	resetGame();
+
 	while (!glfwWindowShouldClose(window))
 	{
+		deltaTime = glfwGetTime() - lastTime; //Time since last frame
+		lastTime = glfwGetTime();
+
 		//Main loop
-		updateScreen();
 		glfwPollEvents();
+		handleKeys();
+		moveBall();
+		updateScreen();
 	}
 
 	//Clean up GLFW
@@ -109,8 +164,26 @@ void error(int error, const char* desc) {
 }
 
 static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	//cout << "Key: " << key << " Scancode: " << scancode << " Action: " << action << " Mods: " << mods << endl;
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	
+	if (key == W) {
+		if(action == GLFW_RELEASE) leftDir = 0;
+		else leftDir = 1;
+	}
+	else if (key == S) {
+		if (action == GLFW_RELEASE) leftDir = 0;
+		else leftDir = -1;
+	}
+	else if (key == UP) {
+		if (action == GLFW_RELEASE) rightDir = 0;
+		else rightDir = 1;
+	}
+	else if (key == DOWN) {
+		if (action == GLFW_RELEASE) rightDir = 0;
+		else rightDir = -1;
+	}
 }
 
 //Taken from https://stackoverflow.com/a/2602258
@@ -142,25 +215,9 @@ void updateScreen() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//Draw paddles
-	draw(leftPaddle.vertices()[0]);
-	draw(leftPaddle.vertices()[1]);
-	draw(rightPaddle.vertices()[0]);
-	draw(rightPaddle.vertices()[1]);
-
-	//float vertices[] = {
-	//	-0.5f, -0.5f, 0.0f,
-	//	0.5f, -0.5f, 0.0f,
-	//	0.0f,  0.5f, 0.0f
-	//};
-
-	//draw(vertices);
-
-	////Cannot reinitialize an array, must set individual values or make a new array
-	////Invert each value in vertices
-	//for (int i = 0; i < sizeof(vertices) / sizeof(vertices[0]); i++)
-	//	vertices[i] = -vertices[i];
-
-	//draw(vertices);
+	leftPaddle.drawSelf();
+	rightPaddle.drawSelf();
+	ball.drawSelf();
 
 	glfwSwapBuffers(window); //Updates screen, we write to one buffer, while we display the other
 }
@@ -259,4 +316,72 @@ GLuint genVAO(float *vertices) {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
 	return vao;
+}
+
+void resetGame() {
+	ball.x = 0;
+	ball.y = 0;
+	ball.velX = ((float)(rand()) / (float)RAND_MAX) * 2 - 1;
+	ball.velY = ((float)(rand()) / (float)RAND_MAX) * 2 - 1;
+
+	float velTotal = ball.velX + ball.velY;
+	ball.velX /= velTotal;
+	ball.velY /= velTotal;
+
+	//Cap velocity
+	const float MAX_VEL = 1.0f;
+	ball.velX = min(MAX_VEL, max(-MAX_VEL, ball.velX));
+	ball.velY = min(MAX_VEL, max(-MAX_VEL, ball.velY));
+
+	ballSpeed = BALL_SPEED_INITIAL;
+
+	leftPaddle.y = -PADDLE_HEIGHT / 2;
+	rightPaddle.y = -PADDLE_HEIGHT / 2;
+}
+
+void moveBall() {
+	ball.x += ball.velX * ballSpeed * deltaTime;
+	ball.y += ball.velY * ballSpeed * deltaTime;
+
+	if (abs(ball.y) + ball.height >= 1)
+		ball.velY *= -1;
+	
+	bool bounceX = abs(ball.x) >= 1;
+	
+	//Check if ball is colliding with paddle
+	if (ball.y + ball.height > leftPaddle.y && ball.y < leftPaddle.y + leftPaddle.height && ball.x <= leftPaddle.x + leftPaddle.width) bounceX = true;
+	else if (ball.y + ball.height > rightPaddle.y && ball.y < rightPaddle.y + rightPaddle.height && ball.x + ball.width >= rightPaddle.x) bounceX = true;
+
+	if (bounceX) {
+		ball.velX *= -1;
+		ballSpeed += BALL_SPEED_INCREASE;
+	}
+
+	//Check if ball is out of bounds
+	if (ball.x <= -1) {
+		rightScore++;
+		resetGame();
+	}
+	else if (ball.x >= 1) {
+		leftScore++;
+		resetGame();
+	}
+}
+
+void movePaddle(Rect& paddle, float dir) {
+	float speed = PADDLE_SPEED * deltaTime;
+	
+	if ((paddle.y + paddle.height < 1 && dir > 0) ||
+				(paddle.y > -1 && dir < 0))
+		paddle.y += dir * speed;
+}
+
+void handleKeys() {
+	float left = leftDir, right = rightDir;
+	
+	left *= PADDLE_SPEED * deltaTime;
+	right *= PADDLE_SPEED * deltaTime;
+
+	movePaddle(leftPaddle, left);
+	movePaddle(rightPaddle, right);
 }
