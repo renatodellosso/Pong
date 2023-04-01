@@ -32,5 +32,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="src\shaders\vertex.vert" />
+    <None Include="src\shaders\fragment.frag" />
+    <None Include="src\shaders\text.vert" />
+    <None Include="src\shaders\text.frag" />
   </ItemGroup>
 </Project>

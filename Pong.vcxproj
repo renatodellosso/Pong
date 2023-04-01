@@ -140,6 +140,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="src\shaders\fragment.frag" />
+    <None Include="src\shaders\text.frag" />
+    <None Include="src\shaders\text.vert" />
+    <None Include="src\shaders\vertex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

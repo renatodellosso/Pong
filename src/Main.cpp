@@ -3,9 +3,16 @@
 #include <sstream>
 #include <string>
 #include <cstring>
+#include <map>
 
-#include <glad/glad.h> //Make to sure to glad.c to included in project!
+#include <glad/glad.h> //Make to sure to include glad.c in project!
 #include <GLFW/glfw3.h>
+//#include <glm/glm.hpp> //From https://github.com/g-truc/glm
+
+//FreeType: https://freetype.org/freetype2/docs/tutorial/step1.html
+#include <freetype/config/ftheader.h>
+#include <freetype/freetype.h>
+#include FT_FREETYPE_H
 
 using namespace std;
 
@@ -15,18 +22,59 @@ void error(int error, const char* desc);
 static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void updateScreen();
 string readFile(string file);
-void initShaders();
+int initShaders();
 GLuint genVAO(float *vertices);
 void draw(float *vertices);
 void moveBall();
 void handleKeys();
 void resetGame();
+int initFT();
+void loadFont();
+void drawText(string text, float x, float y, float scale);
 
-GLuint shaderProgram; //Unsigned int
+const int SCREEN_WIDTH = 1920, SCREEN_HEIGHT = 1080; //Screen size
+
+GLuint shaderProgram, textShader; //Unsigned int
 GLuint vao; //VertexAttribObject, stores our vertex config
 
+FT_Library ft;
+FT_Face face; //Basically the font/style
+
+struct Vector2 {
+	float x = 0, y = 0;
+
+	Vector2(float x, float y) {
+		this->x = x;
+		this->y = y;
+	}
+
+	Vector2() {}
+};
+
+struct Character {
+	unsigned int textureID = 0; //ID handle of the glyph texture
+	Vector2 size; //Size of glyph
+	Vector2 bearing; //Offset from baseline to left/top of glyph
+	unsigned int advance = 0; //Offset to advance to next glyph
+
+	Character() { } //Default constructor
+
+	Character(unsigned int textureID, Vector2 size, Vector2 bearing, unsigned int advance) {
+		this->textureID = textureID;
+		this->size = size;
+		this->bearing = bearing;
+		this->advance = advance;
+	}
+};
+
+map<char, Character> characters; //Dictionary to store character textures
+GLuint textVAO, textVBO; //Text Vertex Array Object, Text Vertex Buffer Object
+
+//Range from 0 to 1920 and 0 to 1080 (screen coords), not sure we have to do this
+//glm::mat4 projection = glm::ortho(0.0f, 1920.0f, 0.0f, 1080.0f);
+
 struct Rect {
-	float x, y, width, height;
+	float x = 0, y = 0, width = 0, height = 0;
 
 	float** vertices() {
 		static float** verts = 0; //2D array
@@ -66,7 +114,7 @@ struct Rect {
 };
 
 struct Ball : Rect {
-	float velX, velY;
+	float velX = 0, velY = 0;
 
 	//Create a constructor to populate variables
 	Ball(float x, float y, float width, float height, float velX, float velY) {
@@ -109,7 +157,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//Create window and context, getPrimaryMonitor makes it fullscreen
-	window = glfwCreateWindow(1920, 1080, "Pong", glfwGetPrimaryMonitor(), NULL);
+	window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pong", glfwGetPrimaryMonitor(), NULL);
 
 	if (!window) {
 		//Failed to create window
@@ -134,11 +182,28 @@ int main() {
 
 	glfwSwapInterval(1);
 
-	initShaders();
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+
+	int shadersInitted = initShaders();
+	if (shadersInitted != 0) {
+		cout << "Failed to init shaders";
+		return 7;
+	}
 
 	lastTime = glfwGetTime(); //Gets the time since init
 
 	resetGame();
+
+	int ftInitted = initFT();
+	if (ftInitted != 0) {
+		cout << "Failed to init FreeType" << endl;
+		return ftInitted;
+	}
+
+	loadFont();
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -211,87 +276,89 @@ void draw(float* vertices) {
 
 void updateScreen() {
 	//Clear previous frame
-	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+	glUseProgram(shaderProgram);
 
 	//Draw paddles
 	leftPaddle.drawSelf();
 	rightPaddle.drawSelf();
 	ball.drawSelf();
 
+	//Rect(-1.0f, -1.0f, 4.0f, 2.0f).drawSelf(); //White rectangle covering entire screen
+
+	stringstream ss;
+	ss << leftScore << " - " << rightScore;
+
+	drawText(ss.str(), 0.5f, 0.5f, 1);
+
 	glfwSwapBuffers(window); //Updates screen, we write to one buffer, while we display the other
 }
 
-void initShaders() {
-	//cout << "Initting shaders...\n";
+//OpenGL flags are of type GLenum
+GLuint loadShader(string file, GLenum type) {
+	//cout << "Loading shader: " << file << ", Type: " << type << endl;
 
-	//Vertex Shader
-	//cout << "Initting vertex shader...\n";
 	//Compile shaders, taken from https://learnopengl.com/Getting-started/Hello-Triangle
-	string vertexShaderCode = readFile("src/shaders/vertex.vert");
+	string code = readFile(file);
 	//String to char array from https://www.geeksforgeeks.org/convert-string-char-array-cpp/, make to use length+1 to leave room for terminating character!
-	char* vertexShaderSource = new char[vertexShaderCode.length() + 1];
-	strcpy_s(vertexShaderSource, vertexShaderCode.length()+1, vertexShaderCode.c_str());
+	char* source = new char[code.length() + 1];
+	strcpy_s(source, code.length() + 1, code.c_str());
 
-	//cout << endl << vertexShaderSource << endl;
+	//cout << endl << source << endl;
 
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
+	GLuint shader = glCreateShader(type);
+	glShaderSource(shader, 1, &source, NULL);
+	glCompileShader(shader);
 
 	//Check for errors
 	int success;
 	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	glGetProgramiv(shader, GL_COMPILE_STATUS, &success);
 
 	if (!success) {
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		cout << "Error: Vertex shader compilation failed. Details:\n" << infoLog << endl;
+		glGetShaderInfoLog(shader, 512, NULL, infoLog);
+		cout << "Error: Shader compilation failed. Source File: " << file << " Details:\n" << infoLog << endl;
 	}
 
-	//Fragment Shader
-	//cout << "Initting fragment shader...\n";
-	string fragmentShaderCode = readFile("src/shaders/fragment.frag");
+	return shader;
+}
 
-	char* fragmentShaderSource = new char[fragmentShaderCode.length() + 1];
-	strcpy_s(fragmentShaderSource, fragmentShaderCode.length()+1, fragmentShaderCode.c_str());
+int createShaderProgram(GLuint& program, string vertFile, string fragFile) {
+	GLuint vert = loadShader(vertFile, GL_VERTEX_SHADER);
+	GLuint frag = loadShader(fragFile, GL_FRAGMENT_SHADER);
 
-	//cout << endl << fragmentShaderSource << endl;
-
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	//Error checking
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-
-	if (!success) {
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		cout << "Error: Fragment shader compilation failed. Details:\n" << infoLog << endl;
-	}
-
-	//Create combined shader program
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
+	program = glCreateProgram();
+	glAttachShader(program, vert);
+	glAttachShader(program, frag);
+	glLinkProgram(program);
 
 	//Error checking
+	int success;
+	char infoLog[512];
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 
 	if (!success) {
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		cout << "Error: Shader linking failed. Details:\n" << infoLog << endl;
+		cout << "Error: Shader linking failed. Program: " << program << ", Vert File: " << vertFile << ", Frag File: " << fragFile << " Details:\n" << infoLog << endl;
+		return 7;
 	}
 
-	//Use shader program
-	glUseProgram(shaderProgram);
+	glDeleteShader(vert);
+	glDeleteShader(frag);
 
-	//We don't need the shader objects anymore
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	return 0;
+}
 
-	//cout << "Finished initting shaders\n";
+int initShaders() {
+	//Load normal shader
+	if(createShaderProgram(shaderProgram, "src/shaders/vertex.vert", "src/shaders/fragment.frag") != 0)
+		return 7;
+
+	//Load text shader
+	if(createShaderProgram(textShader, "src/shaders/text.vert", "src/shaders/text.frag") != 0)
+		return 7;
+
+	return 0;
 }
 
 GLuint genVAO(float *vertices) {
@@ -315,6 +382,25 @@ GLuint genVAO(float *vertices) {
 	//Configure how vbo is interpreted, 0 is the first value, since we said position is at location 0 in our vertex shader
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
+	return vao;
+}
+
+GLuint genTextVAO() {
+	unsigned int vao, vbo;
+
+	//Create and configure VAO and VBO
+	glGenVertexArrays(1, &vao);
+	glGenBuffers(1, &vbo);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	textVAO = vao;
+	textVBO = vbo;
 	return vao;
 }
 
@@ -343,7 +429,7 @@ void moveBall() {
 	ball.x += ball.velX * ballSpeed * deltaTime;
 	ball.y += ball.velY * ballSpeed * deltaTime;
 
-	if (abs(ball.y) + ball.height >= 1)
+	if (abs(ball.y) >= 1 || ball.y + ball.height >= 1)
 		ball.velY *= -1;
 	
 	bool bounceX = abs(ball.x) >= 1;
@@ -384,4 +470,133 @@ void handleKeys() {
 
 	movePaddle(leftPaddle, left);
 	movePaddle(rightPaddle, right);
+}
+
+int initFT() {
+	int error = FT_Init_FreeType(&ft);
+	if (error) {
+		cout << "Error: Failed to init FreeType\n";
+		return 4;
+	}
+
+	error = FT_New_Face(ft, "resources/fonts/arial.ttf", 0, &face);
+	if (error == FT_Err_Unknown_File_Format) {
+		cout << "Error: Font file format not supported\n";
+		return 5;
+	}
+	else if (error) {
+		cout << "Error: Failed to load font\n";
+		return 6;
+	}
+
+	error = FT_Set_Char_Size(face, 0, 16 * 64, 0, 0); //16pt point, FT uses 1/64th of a point, so we multiply by 64
+
+	return 0;
+}
+
+void drawText(string text, float x, float y, float scale) {
+	cout << "Drawing text: " << text << ", x: " << x << ", y: " << y << ", scale: " << scale << endl;
+	glUseProgram(textShader);
+
+	glUniform3f(glGetUniformLocation(textShader, "textColor"), 1.0f, 1.0f, 1.0f); //Configure text color
+	glActiveTexture(GL_TEXTURE0);
+	glBindVertexArray(genTextVAO()); //Set the vao to the one for text;
+
+	//Iterate through each character
+	string::const_iterator c; //::const_iterator allows to iterate through a string
+	for (c = text.begin(); c != text.end(); c++) {
+		//cout << "Drawing char: " << c[0] << endl;
+		Character character = characters[c[0]]; //Get the Character struct from the current char
+
+		//cout << "Character Texture: " << character.textureID << endl;
+
+		float xPos = x + character.bearing.x * scale;
+		float yPos = y + character.bearing.y * scale;
+
+		float width = character.size.x * scale / 64;
+		float height = character.size.y * scale /64;
+
+		//Normal the positiion and width to the scale of the window
+		//xPos /= SCREEN_WIDTH;
+		yPos /= SCREEN_HEIGHT;
+		//width /= SCREEN_WIDTH;
+		//height /= SCREEN_HEIGHT;
+
+		cout << "xPos: " << xPos << " yPos: " << yPos << " width: " << width << " height: " << height << " texture: " << character.textureID << endl;
+
+		//Update the VBO for the character, generate new vertices from the character struct
+		float vertices[6][4] = {
+			{ xPos, yPos + height, 0.0f, 0.0f },
+			{ xPos, yPos, 0.0f, 1.0f },
+			{ xPos + width, yPos, 1.0f, 1.0f },
+			{ xPos, yPos + height, 0.0f, 0.0f },
+			{ xPos + width, yPos, 1.0f, 1.0f },
+			{ xPos + width, yPos + height, 1.0f, 0.0f }
+		};
+
+		//Bind the texture
+		glBindTexture(GL_TEXTURE_2D, character.textureID);
+
+		//Set the vertices
+		glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		//Draw the character
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//Advance the cursor
+		x += (character.advance >> 6) * scale / 64;
+	}
+
+	//Unbind vertex buffers
+	glBindVertexArray(0); //Pass 0 to unbind
+	glBindTexture(GL_TEXTURE_2D, 0);	
+}
+
+//Taken from https://learnopengl.com/in-Practice/text-rendering
+void loadFont() {
+	FT_GlyphSlot slot = face->glyph;
+
+	string alphabet = " -0123456789";
+	for (char c: alphabet) {
+		//cout << "Loading char: " << c << endl;
+		
+		//Write each character
+		FT_UInt glyphIndex = FT_Get_Char_Index(face, c);
+
+		int error = FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
+		if (error) {
+			cout << "Failed to load glyph for char: " << c << endl;
+			continue;
+		}
+
+		//Generate texture
+		unsigned int texture;
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, slot->bitmap.width, slot->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, slot->bitmap.buffer);
+
+		//Set texture options
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		//Store character for later use
+		Character character = {
+			texture,
+			Vector2(slot->bitmap.width, slot->bitmap.rows),
+			Vector2(slot->bitmap_left, slot->bitmap_top),
+			(unsigned int)slot->advance.x
+		};
+		
+		//Create pair with char for the key and character for the value, then pass in the key and value
+		characters.insert(pair<char, Character>(c, character));
+	}
+
+	//Clean up FreeType to free up resources
+	FT_Done_Face(face);
+	FT_Done_FreeType(ft);
 }
