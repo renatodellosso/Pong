@@ -14,6 +14,8 @@
 #include <freetype/freetype.h>
 #include FT_FREETYPE_H
 
+#include <stb/stb_image.h>
+
 using namespace std;
 
 GLFWwindow* window;
@@ -33,6 +35,48 @@ void loadFont();
 void drawText(string text, float x, float y, float scale);
 
 const int SCREEN_WIDTH = 1920, SCREEN_HEIGHT = 1080; //Screen size
+
+struct Texture {
+	int width = 0, height = 0, colorChannels;
+	unsigned char* bytes;
+	GLuint textureID = 0;
+
+	Texture(string file, int width, int height, int channels) {
+		this->width = width;
+		this->height = height;
+		this->colorChannels = channels;
+
+		bytes = stbi_load(file.c_str(), &width, &height, &channels, 0);
+	}
+
+	Texture() { } //Default constructor
+
+	void generate() {
+		//Create the texture
+		glGenTextures(1, &textureID);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+
+		//Configure the texture
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		//Generate the texture
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+
+		//Clean up
+		stbi_image_free(bytes);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		//Generate mipmap
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+};
+
+Texture testTexture = Texture("resources/acererak.png", 2000, 1319, 3);
 
 GLuint shaderProgram, textShader; //Unsigned int
 GLuint vao; //VertexAttribObject, stores our vertex config
@@ -495,11 +539,13 @@ int initFT() {
 }
 
 void drawText(string text, float x, float y, float scale) {
-	cout << "Drawing text: " << text << ", x: " << x << ", y: " << y << ", scale: " << scale << endl;
+	//cout << "Drawing text: " << text << ", x: " << x << ", y: " << y << ", scale: " << scale << endl;
 	glUseProgram(textShader);
 
-	glUniform3f(glGetUniformLocation(textShader, "textColor"), 1.0f, 1.0f, 1.0f); //Configure text color
-	glActiveTexture(GL_TEXTURE0);
+	//glUniform3f(glGetUniformLocation(textShader, "textColor"), 1.0f, 1.0f, 1.0f); //Configure text color
+	//glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, testTexture.textureID);
+	glUniform1i(glGetUniformLocation(textShader, "textID"), 0);
 	glBindVertexArray(genTextVAO()); //Set the vao to the one for text;
 
 	//Iterate through each character
@@ -522,7 +568,7 @@ void drawText(string text, float x, float y, float scale) {
 		//width /= SCREEN_WIDTH;
 		//height /= SCREEN_HEIGHT;
 
-		cout << "xPos: " << xPos << " yPos: " << yPos << " width: " << width << " height: " << height << " texture: " << character.textureID << endl;
+		//cout << "xPos: " << xPos << " yPos: " << yPos << " width: " << width << " height: " << height << " texture: " << character.textureID << endl;
 
 		//Update the VBO for the character, generate new vertices from the character struct
 		float vertices[6][4] = {
@@ -535,7 +581,7 @@ void drawText(string text, float x, float y, float scale) {
 		};
 
 		//Bind the texture
-		glBindTexture(GL_TEXTURE_2D, character.textureID);
+		//glBindTexture(GL_TEXTURE_2D, character.textureID);
 
 		//Set the vertices
 		glBindBuffer(GL_ARRAY_BUFFER, textVBO);
@@ -559,7 +605,7 @@ void loadFont() {
 	FT_GlyphSlot slot = face->glyph;
 
 	string alphabet = " -0123456789";
-	for (char c: alphabet) {
+	for (char c : alphabet) {
 		//cout << "Loading char: " << c << endl;
 		
 		//Write each character
@@ -583,6 +629,8 @@ void loadFont() {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		//cout << "Texture: " << texture << ", Char: " << c << endl;
 
 		//Store character for later use
 		Character character = {

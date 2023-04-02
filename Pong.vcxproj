@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\stb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\glad\glad.h" />
@@ -144,6 +145,12 @@
     <None Include="src\shaders\text.frag" />
     <None Include="src\shaders\text.vert" />
     <None Include="src\shaders\vertex.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\ARIAL.TTF" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\acererak.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

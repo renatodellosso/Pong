@@ -21,6 +21,9 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\stb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\glad\glad.h">
@@ -36,5 +39,13 @@
     <None Include="src\shaders\fragment.frag" />
     <None Include="src\shaders\text.vert" />
     <None Include="src\shaders\text.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\ARIAL.TTF" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\acererak.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
