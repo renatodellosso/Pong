@@ -30,9 +30,6 @@ void draw(float *vertices);
 void moveBall();
 void handleKeys();
 void resetGame();
-int initFT();
-void loadFont();
-void drawText(string text, float x, float y, float scale);
 
 const int SCREEN_WIDTH = 1920, SCREEN_HEIGHT = 1080; //Screen size
 
@@ -81,9 +78,6 @@ Texture testTexture = Texture("resources/acererak.png", 2000, 1319, 3);
 GLuint shaderProgram, textShader; //Unsigned int
 GLuint vao; //VertexAttribObject, stores our vertex config
 
-FT_Library ft;
-FT_Face face; //Basically the font/style
-
 struct Vector2 {
 	float x = 0, y = 0;
 
@@ -94,25 +88,6 @@ struct Vector2 {
 
 	Vector2() {}
 };
-
-struct Character {
-	unsigned int textureID = 0; //ID handle of the glyph texture
-	Vector2 size; //Size of glyph
-	Vector2 bearing; //Offset from baseline to left/top of glyph
-	unsigned int advance = 0; //Offset to advance to next glyph
-
-	Character() { } //Default constructor
-
-	Character(unsigned int textureID, Vector2 size, Vector2 bearing, unsigned int advance) {
-		this->textureID = textureID;
-		this->size = size;
-		this->bearing = bearing;
-		this->advance = advance;
-	}
-};
-
-map<char, Character> characters; //Dictionary to store character textures
-GLuint textVAO, textVBO; //Text Vertex Array Object, Text Vertex Buffer Object
 
 //Range from 0 to 1920 and 0 to 1080 (screen coords), not sure we have to do this
 //glm::mat4 projection = glm::ortho(0.0f, 1920.0f, 0.0f, 1080.0f);
@@ -241,14 +216,6 @@ int main() {
 
 	resetGame();
 
-	int ftInitted = initFT();
-	if (ftInitted != 0) {
-		cout << "Failed to init FreeType" << endl;
-		return ftInitted;
-	}
-
-	loadFont();
-
 	while (!glfwWindowShouldClose(window))
 	{
 		deltaTime = glfwGetTime() - lastTime; //Time since last frame
@@ -329,11 +296,6 @@ void updateScreen() {
 	ball.drawSelf();
 
 	//Rect(-1.0f, -1.0f, 4.0f, 2.0f).drawSelf(); //White rectangle covering entire screen
-
-	stringstream ss;
-	ss << leftScore << " - " << rightScore;
-
-	drawText(ss.str(), 0.5f, 0.5f, 1);
 
 	glfwSwapBuffers(window); //Updates screen, we write to one buffer, while we display the other
 }
@@ -443,8 +405,6 @@ GLuint genTextVAO() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	textVAO = vao;
-	textVBO = vbo;
 	return vao;
 }
 
@@ -514,137 +474,4 @@ void handleKeys() {
 
 	movePaddle(leftPaddle, left);
 	movePaddle(rightPaddle, right);
-}
-
-int initFT() {
-	int error = FT_Init_FreeType(&ft);
-	if (error) {
-		cout << "Error: Failed to init FreeType\n";
-		return 4;
-	}
-
-	error = FT_New_Face(ft, "resources/fonts/arial.ttf", 0, &face);
-	if (error == FT_Err_Unknown_File_Format) {
-		cout << "Error: Font file format not supported\n";
-		return 5;
-	}
-	else if (error) {
-		cout << "Error: Failed to load font\n";
-		return 6;
-	}
-
-	error = FT_Set_Char_Size(face, 0, 16 * 64, 0, 0); //16pt point, FT uses 1/64th of a point, so we multiply by 64
-
-	return 0;
-}
-
-void drawText(string text, float x, float y, float scale) {
-	//cout << "Drawing text: " << text << ", x: " << x << ", y: " << y << ", scale: " << scale << endl;
-	glUseProgram(textShader);
-
-	//glUniform3f(glGetUniformLocation(textShader, "textColor"), 1.0f, 1.0f, 1.0f); //Configure text color
-	//glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, testTexture.textureID);
-	glUniform1i(glGetUniformLocation(textShader, "textID"), 0);
-	glBindVertexArray(genTextVAO()); //Set the vao to the one for text;
-
-	//Iterate through each character
-	string::const_iterator c; //::const_iterator allows to iterate through a string
-	for (c = text.begin(); c != text.end(); c++) {
-		//cout << "Drawing char: " << c[0] << endl;
-		Character character = characters[c[0]]; //Get the Character struct from the current char
-
-		//cout << "Character Texture: " << character.textureID << endl;
-
-		float xPos = x + character.bearing.x * scale;
-		float yPos = y + character.bearing.y * scale;
-
-		float width = character.size.x * scale / 64;
-		float height = character.size.y * scale /64;
-
-		//Normal the positiion and width to the scale of the window
-		//xPos /= SCREEN_WIDTH;
-		yPos /= SCREEN_HEIGHT;
-		//width /= SCREEN_WIDTH;
-		//height /= SCREEN_HEIGHT;
-
-		//cout << "xPos: " << xPos << " yPos: " << yPos << " width: " << width << " height: " << height << " texture: " << character.textureID << endl;
-
-		//Update the VBO for the character, generate new vertices from the character struct
-		float vertices[6][4] = {
-			{ xPos, yPos + height, 0.0f, 0.0f },
-			{ xPos, yPos, 0.0f, 1.0f },
-			{ xPos + width, yPos, 1.0f, 1.0f },
-			{ xPos, yPos + height, 0.0f, 0.0f },
-			{ xPos + width, yPos, 1.0f, 1.0f },
-			{ xPos + width, yPos + height, 1.0f, 0.0f }
-		};
-
-		//Bind the texture
-		//glBindTexture(GL_TEXTURE_2D, character.textureID);
-
-		//Set the vertices
-		glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		//Draw the character
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		//Advance the cursor
-		x += (character.advance >> 6) * scale / 64;
-	}
-
-	//Unbind vertex buffers
-	glBindVertexArray(0); //Pass 0 to unbind
-	glBindTexture(GL_TEXTURE_2D, 0);	
-}
-
-//Taken from https://learnopengl.com/in-Practice/text-rendering
-void loadFont() {
-	FT_GlyphSlot slot = face->glyph;
-
-	string alphabet = " -0123456789";
-	for (char c : alphabet) {
-		//cout << "Loading char: " << c << endl;
-		
-		//Write each character
-		FT_UInt glyphIndex = FT_Get_Char_Index(face, c);
-
-		int error = FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
-		if (error) {
-			cout << "Failed to load glyph for char: " << c << endl;
-			continue;
-		}
-
-		//Generate texture
-		unsigned int texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, slot->bitmap.width, slot->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, slot->bitmap.buffer);
-
-		//Set texture options
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		//cout << "Texture: " << texture << ", Char: " << c << endl;
-
-		//Store character for later use
-		Character character = {
-			texture,
-			Vector2(slot->bitmap.width, slot->bitmap.rows),
-			Vector2(slot->bitmap_left, slot->bitmap_top),
-			(unsigned int)slot->advance.x
-		};
-		
-		//Create pair with char for the key and character for the value, then pass in the key and value
-		characters.insert(pair<char, Character>(c, character));
-	}
-
-	//Clean up FreeType to free up resources
-	FT_Done_Face(face);
-	FT_Done_FreeType(ft);
 }
